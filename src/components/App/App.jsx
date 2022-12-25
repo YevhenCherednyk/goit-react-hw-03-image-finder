@@ -35,7 +35,8 @@ class App extends Component {
 
       try {
         const url = `?q=${query}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`;
-        const { hits, totalHits } = await API.findImages(url);
+        // const { hits, totalHits } = await API.findImages(url);
+        const { hits } = await API.findImages(url);
 
         if (!hits.length) {
           return toast.info('nothing was found for the entered value');
@@ -73,7 +74,8 @@ class App extends Component {
   }
 
   render() {
-    const { status, images, page, totalPages } = this.state;
+    // const { status, images, page, totalPages } = this.state;
+    const { status, images } = this.state;
     return (
       <AppContainer>
         <Searchbar onSubmit={this.handleFormSubmit} />
