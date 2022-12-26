@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import {
   SerchBar,
@@ -13,6 +14,10 @@ class Serchbar extends Component {
     query: '',
   };
 
+  static propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+  };
+
   handleChange = evt => {
     const { name, value } = evt.currentTarget;
 
@@ -24,10 +29,11 @@ class Serchbar extends Component {
 
     const { query } = this.state;
 
-    if (query.trim() === '') {
-      return toast.warning('Please enter your serch value!');
+    if (!query.trim()) {
+      return toast.warning('Please enter a valid value!');
     }
 
+    console.log(this.props);
     this.props.onSubmit(query);
 
     this.reset();
