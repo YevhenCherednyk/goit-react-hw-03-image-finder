@@ -33,7 +33,6 @@ class Serchbar extends Component {
       return toast.warning('Please enter a valid value!');
     }
 
-    console.log(this.props);
     this.props.onSubmit(query);
 
     this.reset();

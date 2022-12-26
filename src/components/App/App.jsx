@@ -74,6 +74,11 @@ class App extends Component {
   handleFormSubmit = query => {
     this.setState({
       query,
+      images: [],
+      page: 1,
+      totalHits: null,
+      totalPages: null,
+      status: 'idle',
     });
   };
 
@@ -87,7 +92,7 @@ class App extends Component {
     const { status, images, page, totalPages } = this.state;
     return (
       <AppContainer>
-        <Searchbar onSubmit={this.handleFormSubmit} />
+        <Searchbar onSubmit={this.handleFormSubmit} images={images} />
         {images.length > 0 && <ImageGallery images={images} />}
         {status === 'pending' && <Loader />}
         {images.length && page !== totalPages && (
