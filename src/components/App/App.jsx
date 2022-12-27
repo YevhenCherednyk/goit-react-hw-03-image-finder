@@ -11,7 +11,6 @@ import Loader from 'components/Loader';
 
 import { AppContainer } from './App.styled';
 
-const API_KEY = '31186773-8484a0bc913959b467e4295b5';
 const IMG_PER_PAGE = 12;
 
 class App extends Component {
@@ -38,9 +37,11 @@ class App extends Component {
       this.setState({ status: 'pending' });
 
       try {
-        const url = `?q=${query}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=${IMG_PER_PAGE}`;
-        const { hits, totalHits } = await API.findImages(url);
+        const { hits, totalHits } = await API.findImages(query, page);
         const totalPages = Math.ceil(totalHits / IMG_PER_PAGE);
+        const newImg = hits.map(({ id, largeImageURL, tags, webformatURL }) => {
+          return { id, largeImageURL, tags, webformatURL };
+        });
 
         if (!hits.length) {
           return toast.error(
@@ -59,7 +60,7 @@ class App extends Component {
         }
 
         this.setState({
-          images: [...images, ...hits],
+          images: [...images, ...newImg],
           totalHits,
           totalPages,
         });
@@ -90,15 +91,15 @@ class App extends Component {
 
   render() {
     const { status, images, page, totalPages } = this.state;
+    const btnisVisible =
+      images.length > 0 && page !== totalPages && status === 'resolved';
+
     return (
       <AppContainer>
         <Searchbar onSubmit={this.handleFormSubmit} images={images} />
         {images.length > 0 && <ImageGallery images={images} />}
         {status === 'pending' && <Loader />}
-        {images.length && page !== totalPages && (
-          <Button onClick={this.loadMore} />
-        )}
-
+        {btnisVisible && <Button onClick={this.loadMore} />}
         <ToastContainer theme="colored" autoClose={3000} />
       </AppContainer>
     );

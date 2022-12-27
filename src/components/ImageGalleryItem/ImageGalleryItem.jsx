@@ -9,6 +9,13 @@ class ImageGalleryItem extends Component {
     showModal: false,
   };
 
+  static propTypes = {
+    id: PropTypes.number.isRequired,
+    tags: PropTypes.string.isRequired,
+    webformatURL: PropTypes.string.isRequired,
+    largeImageURL: PropTypes.string.isRequired,
+  };
+
   openModal = () => {
     this.setState({
       showModal: true,
@@ -40,12 +47,5 @@ class ImageGalleryItem extends Component {
     );
   }
 }
-
-ImageGalleryItem.propTypes = {
-  id: PropTypes.number.isRequired,
-  tags: PropTypes.string.isRequired,
-  webformatURL: PropTypes.string.isRequired,
-  largeImageURL: PropTypes.string.isRequired,
-};
 
 export default ImageGalleryItem;
