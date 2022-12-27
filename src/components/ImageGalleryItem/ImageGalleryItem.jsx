@@ -37,6 +37,7 @@ class ImageGalleryItem extends Component {
           src={webformatURL}
           alt={tags}
           onClick={this.openModal}
+          loading="lazy"
         />
         {showModal && (
           <Modal onClose={this.closeModal}>
